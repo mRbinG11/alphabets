@@ -10,7 +10,9 @@ export const AlphaBtns = () => {
   const [inputText, setInputText] = useState("");
 
   const handleChangeFromKeyboard = useCallback((e) => {
-    setInputText((prev) => prev + e.key.toUpperCase());
+    const isAlphabet = /^[a-zA-Z]$/.test(e.key);
+    if (isAlphabet) setInputText((prev) => prev + e.key.toUpperCase());
+    else if (e.key === "Backspace") setInputText((prev) => prev.slice(0, -1));
   }, []);
 
   const handleChangeFromButtons = (alphabet) => {
