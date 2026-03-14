@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import "./AlphaBtns.css";
 
@@ -9,9 +9,9 @@ export const AlphaBtns = () => {
 
   const [inputText, setInputText] = useState("");
 
-  const handleChangeFromKeyboard = (e) => {
-    setInputText(e.target.value.toUpperCase());
-  };
+  const handleChangeFromKeyboard = useCallback((e) => {
+    setInputText((prev) => prev + e.key.toUpperCase());
+  }, []);
 
   const handleChangeFromButtons = (alphabet) => {
     setInputText((prev) => prev + alphabet);
@@ -21,21 +21,21 @@ export const AlphaBtns = () => {
     setInputText((prev) => prev.slice(0, -1));
   };
 
+  useEffect(() => {
+    window.addEventListener("keydown", handleChangeFromKeyboard);
+    return () => {
+      window.removeEventListener("keydown", handleChangeFromKeyboard);
+    };
+  }, [handleChangeFromKeyboard]);
+
   return (
     <div className="card">
       <h1>Alphabet Buttons</h1>
       <p>Click letters (or use your keyboard) to build text.</p>
-      <div className="output">
-        <input
-          type="text"
-          name="inputText"
-          placeholder="Your text will appear here..."
-          value={inputText}
-          onChange={handleChangeFromKeyboard}
-          autoFocus
-        />
-        <button onClick={backspace}>Backspace</button>
-      </div>
+      <div className="output">{inputText}</div>
+      <button id="backspaceBtn" onClick={backspace}>
+        Backspace
+      </button>
       <div className="buttons">
         {alphabets.map((alphabet) => {
           return (
