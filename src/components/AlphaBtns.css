@@ -1,0 +1,23 @@
+.card {
+    width: 55rem;
+    padding: 2rem 4rem;
+    border-radius: 11px;
+    box-shadow: 5px 5px 10px #888888;
+}
+
+.output {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.output>input {
+    width: 85%;
+    border-radius: 11px;
+}
+
+.buttons {
+    display: flex;
+    gap: 1.1rem;
+    flex-wrap: wrap;
+}
